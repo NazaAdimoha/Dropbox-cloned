@@ -1,15 +1,17 @@
 import { SignInButton, SignedOut, UserButton } from "@clerk/nextjs"
 import Image from "next/image"
 import Link from "next/link"
+import { Button } from "./ui/button"
+import { ModeToggle } from "./ModeToggle"
 
 const Header = () => {
   return (
     <header className="flex items-center justify-between">
       <Link 
         href="/"
-        className="flex items-center space-x-5"
+        className="flex items-center space-x-3"
       >
-        <div className="bg-[#0160FE] w-fit rounded-full p-2">
+        <div className="bg-[#0160FE] w-fit rounded-2xl p-4">
             <Image 
                 src="https://cdn-icons-png.flaticon.com/512/37/37540.png"
                 alt="Dropbox"
@@ -33,6 +35,10 @@ const Header = () => {
                 mode="modal"
             />    
         </SignedOut> 
+        <Button variant="outline">
+            Learn more
+        </Button>
+        <ModeToggle />
       </div>
     </header>
   )
