@@ -34,7 +34,9 @@ const Dashboard = async () => {
 
             <div>
                 {/* Table Wrapper */}
-                <TableWrapper />
+                <TableWrapper 
+                    skeletonFiles={skeletonFiles}
+                />
             </div>
         </section>
     </div>
