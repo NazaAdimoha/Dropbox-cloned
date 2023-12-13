@@ -1,5 +1,6 @@
 "use client";
-import { db, storage } from "@/firebase";
+// import { db, storage } from "@/firebase";
+import { db, storage } from "../firebase"
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { serverTimestamp } from "firebase/database";
@@ -70,7 +71,13 @@ return (
   <DropzoneComponent
     minSize={0}
     maxSize={maxSize}
-    onDrop={(acceptedFiles) => console.log(acceptedFiles)}
+    onDrop={
+        isSignedIn && isLoaded
+            ? onDrop
+            : () => {
+                console.log("not signed in");
+            }
+    }
   >
     {({
       getRootProps,
