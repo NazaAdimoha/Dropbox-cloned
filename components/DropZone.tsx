@@ -71,13 +71,7 @@ return (
   <DropzoneComponent
     minSize={0}
     maxSize={maxSize}
-    onDrop={
-        isSignedIn && isLoaded
-            ? onDrop
-            : () => {
-                console.log("not signed in");
-            }
-    }
+    onDrop={onDrop}
   >
     {({
       getRootProps,
