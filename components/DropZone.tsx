@@ -3,7 +3,7 @@ import { db, storage } from "@/firebase";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { serverTimestamp } from "firebase/database";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
 import DropzoneComponent from "react-dropzone";
@@ -54,17 +54,17 @@ const DropZone = () => {
     await uploadBytes(imageRef, selectedFile).then(async(snapshot) => {
         //get download link from firebase storage
         const downloadURL = await getDownloadURL(
-            ref(storage, `users/${user.id}/files/${documentReference.id}`)
+            imageRef
         );
-        await addDoc(collection(db, "users", user.id, "files"), {
+        await updateDoc(doc(db, "users", user.id, "files", documentReference.id), {
             fileUrl: downloadURL,
-        });
+        })
     });
     setLoading(false);
   };
 
 
-const maxSize = 1048576;
+const maxSize = 3048576;
 
 return (
   <DropzoneComponent
@@ -91,15 +91,6 @@ return (
               isDragActive
                 ? "border-green-500 bg-blue-800 text-white animate-pulse"
                 : "border-gray-300 bg-slate-100/50 dark:bg-slate-8--/80 text-slate-400",
-              isDragAccept
-                ? "border-green-500"
-                : "border-gray-300 bg-slate-100/50 dark:bg-slate-8--/80 text-slate-400",
-              isDragReject
-                ? "border-red-500"
-                : "border-gray-300 bg-slate-100/50 dark:bg-slate-8--/80 text-slate-400",
-              isFileTooLarge
-                ? "border-red-500"
-                : "border-gray-300 bg-slate-100/50 dark:bg-slate-8--/80 text-slate-400"
             )}
           >
             <input {...getInputProps()} />
