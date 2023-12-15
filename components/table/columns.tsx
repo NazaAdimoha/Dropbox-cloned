@@ -6,20 +6,23 @@ import Link from "next/link";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import prettyBytes from "pretty-bytes";
 import { COLOR_EXTENSION_MAP } from "@/constants";
+import moment from "moment";
 
 
 const columns: ColumnDef<FileType>[] = [
   {
-    accessorKey: "type",
-    header: "Type",
+    accessorKey: "fileType",
+    header: "type",
     cell: ({ renderValue, ...props }) => {
       const type = renderValue() as string;
-      const typeArray: string = type.split("/")[1];
+      //fix for reading property as null error when using split()
+      const typeArray = type ? type.split("/") : ["file"];
+      const fileType = typeArray[1] || "file";
       return (
         <div className="w-10">
           <FileIcon
-            extension={typeArray} 
-           labelColor={COLOR_EXTENSION_MAP[typeArray]}
+            extension={fileType} 
+           labelColor={COLOR_EXTENSION_MAP[fileType]}
            // @ts-ignore
            {...defaultStyles[typeArray]}
           />
@@ -34,31 +37,38 @@ const columns: ColumnDef<FileType>[] = [
     {
       accessorKey: "timestamp",
       header: "Date Added",
-    },
-    {
-      accessorKey: "amount",
-      header: "Amount",
-    },
-    {
-      accessorKey: "size",
-      header: "Size",
+      //date formatting appears as an array of objects need to format to string using moment
       cell: ({ renderValue, ...props }) => {
+        const date = renderValue() as Date;
         return <span>
-          {prettyBytes(renderValue() as number)}
-        </span>
+          {moment(date).format("DD/MM/YYYY")}
+        </span>;
       },
     },
     {
-      accessorKey: "downloadUrl",
+      accessorKey: "fileSize",
+      header: "Size",
+      cell: ({ renderValue, ...props }) => {
+        // Ensure renderValue() returns a valid finite number
+        const value = renderValue() as number;
+
+        // Check if value is a valid finite number before applying prettyBytes
+        const formattedValue = Number.isFinite(value) ? prettyBytes(value) : "N/A";
+
+        return <span>{formattedValue}</span>;
+      },
+    },
+    {
+      accessorKey: "fileUrl",
       header: "Link",
       cell: ({ renderValue, ...props }) => (
-        <Link 
+        <a 
             href={renderValue() as string}
             target="_blank"
-            className="text-blue-500 hover:underline hover:text-blue-700"
+            className="text-blue-500 underline hover:text-blue-700"
         >
           Download
-        </Link>
+        </a>
       )
     },
 ]

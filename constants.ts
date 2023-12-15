@@ -1,28 +1,28 @@
 
 export const COLOR_EXTENSION_MAP: { [key: string]: string } = {
-    pdf: "bg-red-500",
-    doc: "bg-blue-500",
-    docx: "bg-blue-500",
-    xls: "bg-green-500",
-    xlsx: "bg-green-500",
-    ppt: "bg-yellow-500",
-    pptx: "bg-yellow-500",
-    jpg: "bg-yellow-500",
-    jpeg: "bg-yellow-500",
-    png: "bg-yellow-500",
-    gif: "bg-yellow-500",
-    mp3: "bg-yellow-500",
-    mp4: "bg-yellow-500",
-    zip: "bg-yellow-500",
-    rar: "bg-yellow-500",
-    txt: "bg-yellow-500",
-    other: "bg-gray-500",
-    mov: "bg-yellow-500",
-    avi: "bg-yellow-500",
-    wav: "bg-yellow-500",
-    svg: "bg-indigo-500",
-    html: "bg-purple-500",
-    js: "bg-yellow-500",
+    pdf: "#EF4444",      // bg-red-500
+    doc: "#3B82F6",      // bg-blue-500
+    docx: "#3B82F6",     // bg-blue-500
+    xls: "#10B981",      // bg-green-500
+    xlsx: "#10B981",     // bg-green-500
+    ppt: "#F59E0B",      // bg-yellow-500
+    pptx: "#F59E0B",     // bg-yellow-500
+    jpg: "#F59E0B",      // bg-yellow-500
+    jpeg: "#F59E0B",     // bg-yellow-500
+    png: "#F59E0B",      // bg-yellow-500
+    gif: "#F59E0B",      // bg-yellow-500
+    mp3: "#F59E0B",      // bg-yellow-500
+    mp4: "#F59E0B",      // bg-yellow-500
+    zip: "#F59E0B",      // bg-yellow-500
+    rar: "#F59E0B",      // bg-yellow-500
+    txt: "#F59E0B",      // bg-yellow-500
+    other: "#6B7280",    // bg-gray-500
+    mov: "#F59E0B",      // bg-yellow-500
+    avi: "#F59E0B",      // bg-yellow-500
+    wav: "#F59E0B",      // bg-yellow-500
+    svg: "#6366F1",      // bg-indigo-500
+    html: "#8B5CF6",     // bg-purple-500
+    js: "#F59E0B",
     ai: "#ff0000",
     psd: "#0093ff",
     sketch: "#ffad00",

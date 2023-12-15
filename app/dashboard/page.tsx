@@ -18,9 +18,9 @@ const Dashboard = async () => {
         fileName: doc?.data().fileName,
         timestamp: new Date(doc?.data().timestamp?.seconds * 1000) || undefined,
         fullName: doc?.data().fullName,
-        downloadUrl: doc?.data().downloadUrl,
-        type: doc?.data().type,
-        size: doc?.data().size,
+        fileUrl: doc?.data().downloadUrl,
+        fileType: doc?.data().type,
+        fileSize: doc?.data().size,
 
         ...doc?.data(),
     }))
