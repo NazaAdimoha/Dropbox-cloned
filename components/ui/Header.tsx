@@ -6,7 +6,7 @@ import { ModeToggle } from "../ModeToggle"
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between">
+    <header className="flex items-center justify-between p-3">
       <Link 
         href="/"
         className="flex items-center space-x-3 ml-4"
