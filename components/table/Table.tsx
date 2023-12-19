@@ -21,6 +21,7 @@ import { FileType } from "@/typings";
 import moment from "moment";
 import { useFileStore } from "@/store/store";
 import { DeleteModal } from "../ui/DeleteModal";
+import { EditModal } from "../ui/EditModal";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -88,6 +89,7 @@ export function DataTable<TData, TValue>({
                 data-state={row.getIsSelected() && "selected"}
               >
                 <DeleteModal />
+                <EditModal />
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {cell.column.id === "timestamp" ? (
