@@ -20,6 +20,7 @@ import { PencilIcon, TrashIcon } from "lucide-react";
 import { FileType } from "@/typings";
 import moment from "moment";
 import { useFileStore } from "@/store/store";
+import { DeleteModal } from "../ui/DeleteModal";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,17 +38,13 @@ export function DataTable<TData, TValue>({
   });
 
   //initialize global state from useFileStore
-  const [
-    setIsDeleteModalOpen,
-    setFileId,
-    setIsEditModalOpen,
-    setFileName,
-  ] = useFileStore((state => [
-    state.setIsDeleteModalOpen,
-    state.setFileId,
-    state.setIsEditModalOpen,
-    state.setFilename,
-  ]))
+  const [setIsDeleteModalOpen, setFileId, setIsEditModalOpen, setFileName] =
+    useFileStore((state) => [
+      state.setIsDeleteModalOpen,
+      state.setFileId,
+      state.setIsEditModalOpen,
+      state.setFilename,
+    ]);
 
   //set up open delete modal function
   const openDeleteModal = (fileId: string) => {
@@ -56,7 +53,7 @@ export function DataTable<TData, TValue>({
   };
 
   //set up open edit modal function
-  const openEditModal = (fileId: string, filename:string) => {
+  const openEditModal = (fileId: string, filename: string) => {
     setFileId(fileId);
     setFileName(filename);
     setIsEditModalOpen(true);
@@ -90,6 +87,7 @@ export function DataTable<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
+                <DeleteModal />
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {cell.column.id === "timestamp" ? (
@@ -105,7 +103,14 @@ export function DataTable<TData, TValue>({
                     ) : cell.column.id === "fileName" ? (
                       <p
                         className="flex items-center underline text-blue-500 hover:text-blue-700 hover:cursor-pointer"
-                        onClick={() => console.log("Omoo")}
+                        onClick={
+                          () =>
+                            openEditModal(
+                              (row.original as FileType).id,
+                              (row.original as FileType).fileName
+                            )
+                          // console.log("Omoo")
+                        }
                       >
                         {cell.getValue() as string}{" "}
                         <PencilIcon size={15} className="ml-2" />
@@ -121,7 +126,9 @@ export function DataTable<TData, TValue>({
                     variant={"outline"}
                     className="ml-auto w-26 h-10"
                     onClick={() => {
-                      console.log("Gadamn");
+                      openDeleteModal((row.original as FileType).id);
+                      // console.log("Gadamn");
+
                       // @ts-ignore
                       // row.original.deleteFile(row.original.id)
                     }}
