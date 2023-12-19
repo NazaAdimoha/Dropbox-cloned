@@ -19,6 +19,7 @@ import { Button } from "../ui/button";
 import { PencilIcon, TrashIcon } from "lucide-react";
 import { FileType } from "@/typings";
 import moment from "moment";
+import { useFileStore } from "@/store/store";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -34,6 +35,19 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  //initialize global state from useFileStore
+  const [
+    setIsDeleteModalOpen,
+    setFileId,
+    setIsEditModalOpen,
+    setFileName,
+  ] = useFileStore((state => [
+    state.setIsDeleteModalOpen,
+    state.setFileId,
+    state.setIsEditModalOpen,
+    state.setFilename,
+  ]))
 
   //set up open delete modal function
   const openDeleteModal = (fileId: string) => {
