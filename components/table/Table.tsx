@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -14,11 +14,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
+import { Button } from "../ui/button";
+import { PencilIcon, TrashIcon } from "lucide-react";
+import { FileType } from "@/typings";
+import moment from "moment";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export function DataTable<TData, TValue>({
@@ -29,7 +33,7 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-  })
+  });
 
   return (
     <div className="rounded-md border">
@@ -47,7 +51,7 @@ export function DataTable<TData, TValue>({
                           header.getContext()
                         )}
                   </TableHead>
-                )
+                );
               })}
             </TableRow>
           ))}
@@ -61,20 +65,54 @@ export function DataTable<TData, TValue>({
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {cell.column.id === "timestamp" ? (
+                      <div className="flex flex-col ">
+                        <div className="text-sm">
+                          {moment(cell.getValue() as Date).format("LL")}
+                        </div>
+
+                        <div className="text-xs text-gray-500">
+                          {moment(cell.getValue() as Date).format("LT")}
+                        </div>
+                      </div>
+                    ) : cell.column.id === "fileName" ? (
+                      <p
+                        className="flex items-center underline text-blue-500 hover:text-blue-700 hover:cursor-pointer"
+                        onClick={() => console.log("Omoo")}
+                      >
+                        {cell.getValue() as string}{" "}
+                        <PencilIcon size={15} className="ml-2" />
+                      </p>
+                    ) : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
                   </TableCell>
                 ))}
+
+                <TableCell key={(row.original as FileType).id}>
+                  <Button
+                    variant={"outline"}
+                    className="ml-auto w-26 h-10"
+                    onClick={() => {
+                      console.log("Gadamn");
+                      // @ts-ignore
+                      // row.original.deleteFile(row.original.id)
+                    }}
+                  >
+                    <TrashIcon size={20} />
+                  </Button>
+                </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                Ooups! You've got no files.
               </TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }

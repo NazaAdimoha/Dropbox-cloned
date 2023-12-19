@@ -38,12 +38,17 @@ const columns: ColumnDef<FileType>[] = [
       accessorKey: "timestamp",
       header: "Date Added",
       //date formatting appears as an array of objects need to format to string using moment
-      cell: ({ renderValue, ...props }) => {
-        const date = renderValue() as Date;
-        return <span>
-          {moment(date).format("DD/MM/YYYY")}
-        </span>;
-      },
+      // cell: ({ renderValue, ...props }) => {
+      //   const date = renderValue() as Date;
+      //   return <span>
+      //     {
+      //       date ? moment(date).format(
+      //         "MMMM Do YYYY, h:mm:ss a, z"
+      //       )
+      //       : "N/A"
+      //     }
+      //   </span>;
+      // },
     },
     {
       accessorKey: "fileSize",
