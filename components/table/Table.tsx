@@ -104,7 +104,7 @@ export function DataTable<TData, TValue>({
                       </div>
                     ) : cell.column.id === "fileName" ? (
                       <p
-                        className="flex items-center underline text-blue-500 hover:text-blue-700 hover:cursor-pointer"
+                        className="flex items-center text-blue-500 hover:text-blue-700 hover:cursor-pointer"
                         onClick={
                           () =>
                             openEditModal(
